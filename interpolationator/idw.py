@@ -16,7 +16,6 @@ def get_interpolated_values(xy, values, xi, power=2):
 
     return interpolated_values
 
-
 def idw_interpolation(xy, values, grid_x, grid_points, idw_power=2, chunk_size=1000, show_plot=False):
     # grid_x, grid_points = get_grid_points(xy, cell_size)
     grid_z = np.empty(grid_points.shape[0])
