@@ -1,5 +1,6 @@
 import argparse
 import geopandas as gpd
+import time
 
 from classes import Points
 # TODO: Add georeference image saving
@@ -23,6 +24,9 @@ def main():
     return
   
   points = Points(gdf_points)
+  
+  start_time = time.time()
+  
   if args.griddata:
     if args.plot:
       points.interpolate_griddata(method=args.griddata, show_plot=True)
@@ -33,6 +37,10 @@ def main():
       points.interpolate_idw(power=args.idw, show_plot=True)
     else:
       points.interpolate_idw(power=args.idw)
+  
+  end_time = time.time()
+  elapsed_time = end_time - start_time
+  print(f"Interpolation completed in {elapsed_time:.2f} seconds")
 
 if __name__ == '__main__':
   main()
