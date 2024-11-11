@@ -34,9 +34,9 @@ def main():
   
   if args.griddata:
     if args.plot:
-      points.interpolate_griddata(method=args.griddata, show_plot=True)
+      points.interpolate_griddata(method=args.griddata, cellsize=args.cellsize, show_plot=True)
     else:
-      points.interpolate_griddata(method=args.griddata)
+      points.interpolate_griddata(method=args.griddata, cellsize=args.cellsize)
   elif args.idw:
     if args.plot:
       points.interpolate_idw(power=args.idw, cellsize=args.cellsize, show_plot=True)

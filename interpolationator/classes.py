@@ -10,9 +10,8 @@ class Points:
     self.min_x, self.max_x = self.points[:, 0].min(), self.points[:, 0].max()
     self.min_y, self.max_y = self.points[:, 1].min(), self.points[:, 1].max()
 
-  def interpolate_griddata(self, method, show_plot=False):
-    grid_x, grid_y = np.mgrid[self.min_x:self.max_x:100j, self.min_y:self.max_y:100j]
-    return griddata_interpolation(self.points, self.values, grid_x, grid_y, method=method, show_plot=show_plot)
+  def interpolate_griddata(self, method, cellsize, show_plot=False):
+    return griddata_interpolation(self.points, self.values, cell_size=cellsize, method=method, show_plot=show_plot)
   
   def interpolate_idw(self, power, cellsize, show_plot=False):
     return idw_interpolation(self.points, self.values, idw_power=power, cell_size=cellsize, show_plot=show_plot)
