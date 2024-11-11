@@ -36,15 +36,23 @@ def get_interpolated_values(xy, values, xi, power=2):
 
     return interpolated_values
 
-def get_grid_points(xy):
-  x_min, x_max = np.min(xy[:, 0]), np.max(xy[:, 0])
-  y_min, y_max = np.min(xy[:, 1]), np.max(xy[:, 1])
-  grid_x, grid_y = np.meshgrid(np.linspace(x_min, x_max, 200), np.linspace(y_min, y_max, 200))
-  grid_points = np.column_stack((grid_x.ravel(), grid_y.ravel()))
-  return grid_x, grid_points
+def get_grid_points(xy, cell_size):
+    x_min, x_max = np.min(xy[:, 0]), np.max(xy[:, 0])
+    y_min, y_max = np.min(xy[:, 1]), np.max(xy[:, 1])
+    
+    # Calculate the number of cells based on the cell size
+    num_cells_x = int(np.ceil((x_max - x_min) / cell_size))
+    num_cells_y = int(np.ceil((y_max - y_min) / cell_size))
+    
+    grid_x, grid_y = np.meshgrid(
+        np.linspace(x_min, x_max, num_cells_x),
+        np.linspace(y_min, y_max, num_cells_y)
+    )
+    grid_points = np.column_stack((grid_x.ravel(), grid_y.ravel()))
+    return grid_x, grid_points
 
-def idw_interpolation(xy, values, idw_power=2, show_plot=False):
-  grid_x, grid_points = get_grid_points(xy)
+def idw_interpolation(xy, values, idw_power=2, cell_size=20, show_plot=False):
+  grid_x, grid_points = get_grid_points(xy, cell_size)
   grid_z = get_interpolated_values(xy, values, grid_points, power=idw_power)
 
   # Reshape interpolated values to match the grid
